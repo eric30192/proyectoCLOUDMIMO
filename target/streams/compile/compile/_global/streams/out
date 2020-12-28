@@ -1,0 +1,5 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/conf/routes:8:1: value explore is not a member of controllers.HomeController[0m
+[0m[[0m[31merror[0m] [0m[0mGET    /explore                     controllers.HomeController.explore[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/conf/routes:9:1: value tutorial is not a member of controllers.HomeController[0m
+[0m[[0m[31merror[0m] [0m[0mGET    /tutorial                    controllers.HomeController.tutorial[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

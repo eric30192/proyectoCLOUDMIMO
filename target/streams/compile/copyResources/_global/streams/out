@@ -1,0 +1,4 @@
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/conf/logback.xml,/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/target/scala-2.13/classes/logback.xml)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/conf/application.conf,/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/target/scala-2.13/classes/application.conf)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/conf/routes,/Users/eric/Google Drive/MASTER/CLOUD/REST/codigo/trabajo-eval/target/scala-2.13/classes/routes)[0m
