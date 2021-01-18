@@ -1,0 +1,4 @@
+@(succes:String,mensaje: String)
+        <?xml version="1.0" encoding="utf-8" ?>
+<succes>@succes</succes>
+<info>@mensaje</info>

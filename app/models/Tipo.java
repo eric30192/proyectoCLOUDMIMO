@@ -1,5 +1,6 @@
 package models;
 
+import io.ebean.Finder;
 import io.ebean.Model;
 
 import javax.persistence.CascadeType;
@@ -18,6 +19,11 @@ public class Tipo extends Model {
     @OneToOne(mappedBy = "tipo")
     public Receta receta;
 
+    public static final Finder<Long,Tipo> find = new Finder<>(Tipo.class);
+    //METODOS BASE DE DATOS
+    public static Tipo findTipoById(long id){
+        return find.byId(id);
+    }
     public long getId() {
         return id;
     }

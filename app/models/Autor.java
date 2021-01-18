@@ -1,5 +1,6 @@
 package models;
 
+import io.ebean.Finder;
 import io.ebean.Model;
 import io.ebean.annotation.CreatedTimestamp;
 import io.ebean.annotation.UpdatedTimestamp;
@@ -26,6 +27,11 @@ public class Autor extends Model {
     @UpdatedTimestamp
     Timestamp ultima_actualizacion;
 
+    public static final Finder<Long,Autor> find = new Finder<>(Autor.class);
+    //METODOS BASE DE DATOS
+    public static Autor findAutorById(long id){
+        return find.byId(id);
+    }
     public long getId() {
         return id;
     }

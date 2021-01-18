@@ -2,6 +2,10 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+#REGLAS PARA RECURSO RECETA
+POST /receta controllers.RecetasController.create(nombre:String,descripcion:String,request: Request)
+#GET /usuario controllers.UsuarioController.devolver(nombre:String,request: Request)
+
 # An example controller showing a sample home page
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
