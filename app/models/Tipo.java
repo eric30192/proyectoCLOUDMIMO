@@ -1,9 +1,12 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.ebean.Finder;
 import io.ebean.Model;
+import play.libs.Json;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -13,9 +16,10 @@ public class Tipo extends Model {
     @Id
     long id;
 
-    String nombre;
+    String nombre_tipo;
     String descripcion;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "tipo")
     public Receta receta;
 
@@ -23,6 +27,9 @@ public class Tipo extends Model {
     //METODOS BASE DE DATOS
     public static Tipo findTipoById(long id){
         return find.byId(id);
+    }
+    public static Tipo findByName(String nombre_buscado){
+        return find.query().where().eq("NOMBRE_TIPO",nombre_buscado).findOne();
     }
     public long getId() {
         return id;
@@ -32,12 +39,12 @@ public class Tipo extends Model {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombre_tipo() {
+        return nombre_tipo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre_tipo(String nombre_tipo) {
+        this.nombre_tipo = nombre_tipo;
     }
 
     public String getDescripcion() {
@@ -48,5 +55,15 @@ public class Tipo extends Model {
         this.descripcion = descripcion;
     }
 
+    public String toJson(){
+        ArrayNode respuesta = Json.newArray();
+        ObjectNode tipo = Json.newObject();
 
+        tipo.set("nombre", Json.toJson(this.nombre_tipo));
+        tipo.set("descripcion",Json.toJson(this.descripcion));
+
+        respuesta.add(tipo);
+
+        return respuesta.toString();
+    }
 }

@@ -1,12 +1,17 @@
 package models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.ebean.Finder;
 import io.ebean.Model;
 import io.ebean.annotation.CreatedTimestamp;
 import io.ebean.annotation.UpdatedTimestamp;
 import org.checkerframework.common.aliasing.qual.Unique;
+import org.h2.util.json.JSONObject;
 import play.data.validation.Constraints;
+import play.libs.Json;
 
 import javax.persistence.*;
 import javax.validation.Constraint;
@@ -18,16 +23,23 @@ import java.util.List;
 public class Receta extends Model {
     @Id long id;
     @Constraints.Required(message = "El nombre de la receta es obligatorio")
-    @Unique
-            @Constraints.MinLength(message = "El nombre debe tener 3 carácteres o mas",value = 3)
+    @Column(unique = true)
+    @Constraints.MinLength(message = "El nombre debe tener 3 carácteres o mas",value = 3)
     String nombre;
 
     String descripcion;
+
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     public Tipo tipo;
 
+    @JsonManagedReference
     @ManyToOne
     public Autor autor;
+
+
+
+    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL)
     public List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
     @CreatedTimestamp
@@ -40,15 +52,11 @@ public class Receta extends Model {
     public static Integer findNumeroDeRecetas(){
         return find.query().findCount();
     }
-    /*public Receta(String nombre, String descripcion,long autor, long tipo)
-    {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        Autor autor_aux = new Autor();
-        this.autor = autor_aux.findAutorById(autor);
-        Tipo tipo_aux = new Tipo();
-        this.tipo = tipo_aux.findTipoById(tipo);
-    }*/
+    public static Receta findByName(String nombre){
+        return find.query().where().eq("NOMBRE",nombre).findOne();
+    }
+    public static List<Receta> findAll(){return find.query().findList(); }
+
     public long getId() {
         return id;
     }
@@ -80,6 +88,16 @@ public class Receta extends Model {
         this.tipo = tipo;
     }
 
+    public List<Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(List<Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
+    }
+    public void addIngrediente(Ingrediente ingrediente_nuevo) {
+        this.ingredientes.add(ingrediente_nuevo);
+    }
     public Autor getAutor() {
         return autor;
     }
@@ -102,6 +120,33 @@ public class Receta extends Model {
 
     public void setUltima_actualizacion(Timestamp ultima_actualizacion) {
         this.ultima_actualizacion = ultima_actualizacion;
+    }
+
+    public String toJson(){
+        ArrayNode respuesta = Json.newArray();
+        ObjectNode receta = Json.newObject();
+        ObjectNode ingredientes = Json.newObject();
+
+
+        receta.set("nombre", Json.toJson(this.nombre));
+        receta.set("descripcion",Json.toJson(this.descripcion));
+
+        if(this.autor != null){
+            receta.set("autor", Json.parse(this.autor.toJson().replace("/\\/g", "")));
+        }
+        if(this.tipo != null){
+            receta.set("tipo", Json.parse(this.tipo.toJson().replace("/\\/g", "")));
+        }
+        if(this.ingredientes.size() > 0){
+            for(int i =0;i<this.ingredientes.size();i++)
+            {
+                ingredientes.set("ingrediente"+(i+1), Json.parse(this.ingredientes.get(i).toJson().replace("/\\/g", "")));
+            }
+            receta.set("ingredientes", ingredientes);
+        }
+
+        respuesta.add(receta);
+        return respuesta.toString();
     }
 
 }

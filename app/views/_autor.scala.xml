@@ -1,0 +1,6 @@
+@(autor:Autor)
+<autor>
+    <nombre>@autor.getNombre()</nombre>
+    <descripcion>@autor.getApellidos()</descripcion>
+    <ciudad_natal>@autor.getCiudad_natal()</ciudad_natal>
+</autor>

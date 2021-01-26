@@ -1,9 +1,13 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.ebean.Finder;
 import io.ebean.Model;
 import io.ebean.annotation.CreatedTimestamp;
 import io.ebean.annotation.UpdatedTimestamp;
+import play.libs.Json;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,6 +24,7 @@ public class Autor extends Model {
     String apellidos;
     String ciudad_natal;
 
+    @JsonBackReference
     @OneToMany(cascade= CascadeType.ALL,mappedBy = "autor")
     public List<Receta> recetas_del_autor;
     @CreatedTimestamp
@@ -27,6 +32,9 @@ public class Autor extends Model {
     @UpdatedTimestamp
     Timestamp ultima_actualizacion;
 
+    public static Autor findByName(String nombre){
+        return find.query().where().eq("NOMBRE",nombre).findOne();
+    }
     public static final Finder<Long,Autor> find = new Finder<>(Autor.class);
     //METODOS BASE DE DATOS
     public static Autor findAutorById(long id){
@@ -78,5 +86,17 @@ public class Autor extends Model {
 
     public void setUltima_actualizacion(Timestamp ultima_actualizacion) {
         this.ultima_actualizacion = ultima_actualizacion;
+    }
+
+    public String toJson(){
+        ArrayNode respuesta = Json.newArray();
+        ObjectNode autor = Json.newObject();
+
+        autor.set("nombre", Json.toJson(this.nombre));
+        autor.set("apellidos",Json.toJson(this.apellidos));
+        autor.set("ciudad_natal",Json.toJson(this.ciudad_natal));
+        respuesta.add(autor);
+
+        return respuesta.toString();
     }
 }

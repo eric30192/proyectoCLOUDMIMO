@@ -4,6 +4,10 @@
 
 #REGLAS PARA RECURSO RECETA
 POST /receta controllers.RecetasController.create(nombre:String,descripcion:String,request: Request)
+PUT /receta controllers.RecetasController.update(nombre:String,nombre_nuevo:String,descripcion_nuevo:String,autor_nuevo:String,tipo_nuevo:String,ingrediente_nuevo:String,request: Request)
+DELETE /receta controllers.RecetasController.delete(nombre:String,request: Request)
+GET /receta controllers.RecetasController.devolver(nombre:String,request: Request)
+GET /recetas controllers.RecetasController.listar(request: Request)
 #GET /usuario controllers.UsuarioController.devolver(nombre:String,request: Request)
 
 # An example controller showing a sample home page

@@ -1,0 +1,22 @@
+@(receta:Receta,modo:Integer)
+        @if(modo == 1){
+            <?xml version="1.0" encoding="utf-8" ?>
+        }
+<receta>
+    <nombre>@receta.getNombre()</nombre>
+    <descripcion>@receta.getDescripcion()</descripcion>
+    @if(receta.getAutor() != null){
+        @_autor(receta.getAutor())
+    }
+    @if(receta.getTipo() != null){
+        @_tipo(receta.getTipo())
+    }
+    @if(receta.getIngredientes().size() > 0){
+        <ingredientes>
+            @for(i <- receta.getIngredientes()){
+            @_ingrediente(i)
+            }
+        </ingredientes>
+    }
+
+</receta>

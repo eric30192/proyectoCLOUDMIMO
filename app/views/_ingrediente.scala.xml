@@ -1,0 +1,5 @@
+@(ingrediente:Ingrediente)
+<ingrediente>
+    <nombre>@ingrediente.getNombre()</nombre>
+    <descripcion>@ingrediente.getFamilia()</descripcion>
+</ingrediente>
