@@ -24,6 +24,7 @@ public class Autor extends Model {
     String apellidos;
     String ciudad_natal;
 
+
     @JsonBackReference
     @OneToMany(cascade= CascadeType.ALL,mappedBy = "autor")
     public List<Receta> recetas_del_autor;
@@ -36,12 +37,27 @@ public class Autor extends Model {
         return find.query().where().eq("NOMBRE",nombre).findOne();
     }
     public static final Finder<Long,Autor> find = new Finder<>(Autor.class);
+    public static Integer findNumeroDeRecetas(){
+        return find.query().findCount();
+    }
+    public static List<Autor> findAll(){return find.query().findList(); }
     //METODOS BASE DE DATOS
     public static Autor findAutorById(long id){
         return find.byId(id);
     }
     public long getId() {
         return id;
+    }
+
+    public List<Receta> getRecetas_del_autor() {
+        return recetas_del_autor;
+    }
+
+    public void setRecetas_del_autor(List<Receta> recetas_del_autor) {
+        this.recetas_del_autor = recetas_del_autor;
+    }
+    public void addRecetas_del_autor(Receta receta_nueva) {
+        this.recetas_del_autor.add(receta_nueva);
     }
 
     public void setId(long id) {
@@ -88,15 +104,27 @@ public class Autor extends Model {
         this.ultima_actualizacion = ultima_actualizacion;
     }
 
-    public String toJson(){
+    public String toJson(Integer modo){
         ArrayNode respuesta = Json.newArray();
         ObjectNode autor = Json.newObject();
+        ObjectNode recetas = Json.newObject();
 
         autor.set("nombre", Json.toJson(this.nombre));
         autor.set("apellidos",Json.toJson(this.apellidos));
         autor.set("ciudad_natal",Json.toJson(this.ciudad_natal));
-        respuesta.add(autor);
+        if(modo == 2)
+        {
 
+            if(this.recetas_del_autor.size() > 0){
+                for(int i =0;i<this.recetas_del_autor.size();i++)
+                {
+                    recetas.set("receta"+(i+1), Json.parse(this.recetas_del_autor.get(i).toJson(3).replace("/\\/g", "")));
+                }
+                autor.set("recetas", recetas);
+            }
+        }
+        respuesta.add(autor);
+        System.out.println(respuesta.toString());
         return respuesta.toString();
     }
 }

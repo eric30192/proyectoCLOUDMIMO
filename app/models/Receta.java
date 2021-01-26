@@ -122,7 +122,10 @@ public class Receta extends Model {
         this.ultima_actualizacion = ultima_actualizacion;
     }
 
-    public String toJson(){
+    //parametro modo para controlar cuando se muestran los demas modelos que contienen receta, procurando que no se efectue un bucle infinito al formar el json
+    //modo = 3 venimos de el modelo Autor
+    //modo = 2 al venir del controlador pasamos este parametro para indicar al metodo del autor que No debe mostrar recetas
+    public String toJson(int modo){
         ArrayNode respuesta = Json.newArray();
         ObjectNode receta = Json.newObject();
         ObjectNode ingredientes = Json.newObject();
@@ -131,9 +134,13 @@ public class Receta extends Model {
         receta.set("nombre", Json.toJson(this.nombre));
         receta.set("descripcion",Json.toJson(this.descripcion));
 
-        if(this.autor != null){
-            receta.set("autor", Json.parse(this.autor.toJson().replace("/\\/g", "")));
+        if(modo != 3)
+        {
+            if(this.autor != null){
+                receta.set("autor", Json.parse(this.autor.toJson(modo).replace("/\\/g", "")));
+            }
         }
+
         if(this.tipo != null){
             receta.set("tipo", Json.parse(this.tipo.toJson().replace("/\\/g", "")));
         }

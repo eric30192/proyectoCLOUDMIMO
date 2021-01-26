@@ -1,0 +1,7 @@
+@(autores:List[Autor])
+        <?xml version="1.0" encoding="utf-8" ?>
+<autores>
+    @for(a <- autores){
+    @_autor(a,3)
+    }
+</autores>

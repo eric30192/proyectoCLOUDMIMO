@@ -282,7 +282,7 @@ public class RecetasController extends Controller {
                     e.printStackTrace();
                 }*/
 
-                String receta = receta_aux.toJson();
+                String receta = receta_aux.toJson(1);
                 info.set("receta", Json.parse(receta.replace("/\\/g", "")));
                 respuesta.add(succes);
                 respuesta.add(info);
@@ -327,7 +327,7 @@ public class RecetasController extends Controller {
                 succes.put("success", true);
                 for (int i=0;i<recetas.size();i++)
                 {
-                    String receta = recetas.get(i).toJson();
+                    String receta = recetas.get(i).toJson(1);
                     info.set("receta"+(i+1), Json.parse(receta.replace("/\\/g", "")));
                 }
                 respuesta.add(succes);

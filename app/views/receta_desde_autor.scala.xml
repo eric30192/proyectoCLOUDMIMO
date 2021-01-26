@@ -1,0 +1,16 @@
+@(receta:Receta)
+<receta>
+    <nombre>@receta.getNombre()</nombre>
+    <descripcion>@receta.getDescripcion()</descripcion>
+    @if(receta.getTipo() != null){
+    @_tipo(receta.getTipo())
+    }
+    @if(receta.getIngredientes().size() > 0){
+    <ingredientes>
+        @for(i <- receta.getIngredientes()){
+        @_ingrediente(i)
+        }
+    </ingredientes>
+    }
+
+</receta>

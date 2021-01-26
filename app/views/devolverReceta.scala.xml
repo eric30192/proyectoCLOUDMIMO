@@ -6,7 +6,7 @@
     <nombre>@receta.getNombre()</nombre>
     <descripcion>@receta.getDescripcion()</descripcion>
     @if(receta.getAutor() != null){
-        @_autor(receta.getAutor())
+        @_autor(receta.getAutor(),1)
     }
     @if(receta.getTipo() != null){
         @_tipo(receta.getTipo())

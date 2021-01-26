@@ -8,7 +8,13 @@ PUT /receta controllers.RecetasController.update(nombre:String,nombre_nuevo:Stri
 DELETE /receta controllers.RecetasController.delete(nombre:String,request: Request)
 GET /receta controllers.RecetasController.devolver(nombre:String,request: Request)
 GET /recetas controllers.RecetasController.listar(request: Request)
-#GET /usuario controllers.UsuarioController.devolver(nombre:String,request: Request)
+
+#REGLAS PARA RECURSO AUTOR
+POST /autor controllers.AutoresController.create(nombre:String,apellidos:String,ciudad_natal:String,request: Request)
+PUT /autor controllers.AutoresController.update(nombre:String,nombre_nuevo:String,apellido_nuevo:String,ciudad_natal_nuevo:String,nombre_receta_nuevo:String,request: Request)
+DELETE /autor controllers.AutoresController.delete(nombre:String,request: Request)
+GET /autor controllers.AutoresController.devolver(nombre:String,request: Request)
+GET /autores controllers.AutoresController.listar(request: Request)
 
 # An example controller showing a sample home page
 # An example controller showing a sample home page
