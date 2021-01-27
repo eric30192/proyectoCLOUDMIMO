@@ -1,4 +1,7 @@
-@(tipo:Tipo)
+@(tipo:Tipo,modo:Integer)
+        @if(modo == 2){
+        <?xml version="1.0" encoding="utf-8" ?>
+        }
 <tipo>
     <nombre>@tipo.getNombre_tipo()</nombre>
     <descripcion>@tipo.getDescripcion()</descripcion>

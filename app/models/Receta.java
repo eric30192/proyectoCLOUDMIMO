@@ -26,20 +26,15 @@ public class Receta extends Model {
     @Column(unique = true)
     @Constraints.MinLength(message = "El nombre debe tener 3 carácteres o mas",value = 3)
     String nombre;
-
+    @Constraints.Required(message = "La descripcion de la receta es obligatoria")
     String descripcion;
 
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     public Tipo tipo;
 
-    @JsonManagedReference
     @ManyToOne
     public Autor autor;
 
-
-
-    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL)
     public List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
     @CreatedTimestamp
@@ -56,6 +51,9 @@ public class Receta extends Model {
         return find.query().where().eq("NOMBRE",nombre).findOne();
     }
     public static List<Receta> findAll(){return find.query().findList(); }
+    public static Receta findById(Integer id){
+        return find.query().where().eq("id",id).findOne();
+    }
 
     public long getId() {
         return id;

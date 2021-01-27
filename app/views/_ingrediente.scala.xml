@@ -1,4 +1,7 @@
-@(ingrediente:Ingrediente)
+@(ingrediente:Ingrediente,modo:Integer)
+        @if(modo == 2){
+        <?xml version="1.0" encoding="utf-8" ?>
+        }
 <ingrediente>
     <nombre>@ingrediente.getNombre()</nombre>
     <descripcion>@ingrediente.getFamilia()</descripcion>

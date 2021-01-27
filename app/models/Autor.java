@@ -25,7 +25,6 @@ public class Autor extends Model {
     String ciudad_natal;
 
 
-    @JsonBackReference
     @OneToMany(cascade= CascadeType.ALL,mappedBy = "autor")
     public List<Receta> recetas_del_autor;
     @CreatedTimestamp
@@ -33,11 +32,11 @@ public class Autor extends Model {
     @UpdatedTimestamp
     Timestamp ultima_actualizacion;
 
+    public static final Finder<Long,Autor> find = new Finder<>(Autor.class);
     public static Autor findByName(String nombre){
         return find.query().where().eq("NOMBRE",nombre).findOne();
     }
-    public static final Finder<Long,Autor> find = new Finder<>(Autor.class);
-    public static Integer findNumeroDeRecetas(){
+    public static Integer findNumeroDeAutores(){
         return find.query().findCount();
     }
     public static List<Autor> findAll(){return find.query().findList(); }
@@ -124,7 +123,6 @@ public class Autor extends Model {
             }
         }
         respuesta.add(autor);
-        System.out.println(respuesta.toString());
         return respuesta.toString();
     }
 }

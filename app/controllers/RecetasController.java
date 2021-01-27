@@ -44,7 +44,6 @@ public class RecetasController extends Controller {
         if (request.contentType().get().equals("application/json")) {
             form = formFactory.form(Receta.class).bindFromRequest(request);
             if (form.hasErrors()) {
-                System.out.println(form.errorsAsJson());
                 return Results.notAcceptable(form.errorsAsJson());
             } else {
                 receta_aux = form.get();
@@ -67,7 +66,12 @@ public class RecetasController extends Controller {
             //jugamos con parametros directamente
             receta_aux.setNombre(nombre.toString());
             receta_aux.setDescripcion(descripcion.toString());
-            form.fill(receta_aux);
+            form = formFactory.form(Receta.class).fill(receta_aux);
+            if (form.hasErrors()) {
+                return Results.notAcceptable(form.errorsAsJson());
+            } else {
+                receta_aux = form.get();
+            }
 
         }
 
@@ -295,6 +299,48 @@ public class RecetasController extends Controller {
             if (receta_aux == null) {
                 succes_aux = "false";
                 mensaje_aux = "No existe ninguna receta con ese nombre!";
+                Content content = views.xml.receta.render(succes_aux, mensaje_aux);
+                return Results.notFound(content).withHeader("X-User-Count", receta_aux.findNumeroDeRecetas().toString());
+
+            } else {
+                Content content = views.xml.devolverReceta.render(receta_aux,1);
+                return Results.ok(content).withHeader("X-User-Count", receta_aux.findNumeroDeRecetas().toString());
+            }
+        } else {
+            return badRequest("Unsupported format");
+        }
+    }
+
+    public Result devolverById(Integer id, Http.Request request) {
+        Receta receta_aux = new Receta();
+        receta_aux = receta_aux.findById(id);
+
+        if (request.accepts("application/json")) {
+            ArrayNode respuesta = Json.newArray();
+            ObjectNode succes = Json.newObject();
+            ObjectNode info = Json.newObject();
+            if (receta_aux == null) {
+                succes.put("success", false);
+                info.put("info", "No existe ninguna receta con ese identificador!");
+                respuesta.add(succes);
+                respuesta.add(info);
+                return Results.notFound(respuesta).withHeader("X-User-Count", receta_aux.findNumeroDeRecetas().toString());
+
+            } else {
+                succes.put("success", true);
+                String receta = receta_aux.toJson(1);
+                info.set("receta", Json.parse(receta.replace("/\\/g", "")));
+                respuesta.add(succes);
+                respuesta.add(info);
+                return Results.ok(respuesta).withHeader("X-User-Count", receta_aux.findNumeroDeRecetas().toString());
+
+            }
+        } else if (request.accepts("application/xml")) {
+            String succes_aux = "";
+            String mensaje_aux = "";
+            if (receta_aux == null) {
+                succes_aux = "false";
+                mensaje_aux = "No existe ninguna receta con ese identificador!";
                 Content content = views.xml.receta.render(succes_aux, mensaje_aux);
                 return Results.notFound(content).withHeader("X-User-Count", receta_aux.findNumeroDeRecetas().toString());
 

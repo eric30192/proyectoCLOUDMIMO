@@ -7,6 +7,7 @@ POST /receta controllers.RecetasController.create(nombre:String,descripcion:Stri
 PUT /receta controllers.RecetasController.update(nombre:String,nombre_nuevo:String,descripcion_nuevo:String,autor_nuevo:String,tipo_nuevo:String,ingrediente_nuevo:String,request: Request)
 DELETE /receta controllers.RecetasController.delete(nombre:String,request: Request)
 GET /receta controllers.RecetasController.devolver(nombre:String,request: Request)
+GET /recetaById controllers.RecetasController.devolverById(id:Integer,request: Request)
 GET /recetas controllers.RecetasController.listar(request: Request)
 
 #REGLAS PARA RECURSO AUTOR
@@ -14,7 +15,24 @@ POST /autor controllers.AutoresController.create(nombre:String,apellidos:String,
 PUT /autor controllers.AutoresController.update(nombre:String,nombre_nuevo:String,apellido_nuevo:String,ciudad_natal_nuevo:String,nombre_receta_nuevo:String,request: Request)
 DELETE /autor controllers.AutoresController.delete(nombre:String,request: Request)
 GET /autor controllers.AutoresController.devolver(nombre:String,request: Request)
+GET /autorById controllers.AutoresController.devolverById(id:Integer,request: Request)
 GET /autores controllers.AutoresController.listar(request: Request)
+
+#REGLAS PARA RECURSO TIPO
+POST /tipo controllers.TiposController.create(nombre_tipo:String,descripcion:String,request: Request)
+PUT /tipo controllers.TiposController.update(nombre_tipo:String,nombre_tipo_nuevo:String,descripcion_nuevo:String,request: Request)
+DELETE /tipo controllers.TiposController.delete(nombre:String,request: Request)
+GET /tipo controllers.TiposController.devolver(nombre:String,request: Request)
+GET /tipoById controllers.TiposController.devolverById(id:Integer,request: Request)
+GET /tipos controllers.TiposController.listar(request: Request)
+
+#REGLAS PARA RECURSO INGREDIENTE
+POST /ingrediente controllers.IngredientesController.create(nombre:String,familia:String,request: Request)
+PUT /ingrediente controllers.IngredientesController.update(nombre:String,nombre_nuevo:String,familia_nuevo:String,request: Request)
+DELETE /ingrediente controllers.IngredientesController.delete(nombre:String,request: Request)
+GET /ingrediente controllers.IngredientesController.devolver(nombre:String,request: Request)
+GET /ingredienteById controllers.IngredientesController.devolverById(id:Integer,request: Request)
+GET /ingredientes controllers.IngredientesController.listar(request: Request)
 
 # An example controller showing a sample home page
 # An example controller showing a sample home page

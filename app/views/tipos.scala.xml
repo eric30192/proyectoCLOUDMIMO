@@ -1,0 +1,7 @@
+@(tipos:List[Tipo])
+        <?xml version="1.0" encoding="utf-8" ?>
+<tipos>
+    @for(t <- tipos){
+    @_tipo(t,1)
+    }
+</tipos>

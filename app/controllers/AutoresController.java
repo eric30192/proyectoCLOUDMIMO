@@ -14,6 +14,9 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.twirl.api.Content;
+import views.xml._autor;
+import views.xml.autores;
+import views.xml.receta;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -99,7 +102,7 @@ public class AutoresController extends Controller {
             }
             respuesta.add(succes);
             respuesta.add(info);
-            return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+            return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
         } else if (request.accepts("application/xml")) {
             String succes_aux = "";
@@ -119,9 +122,9 @@ public class AutoresController extends Controller {
                 succes_aux = "false";
                 mensaje_aux = "Ya existe un autor con ese nombre!";
             }
-            Content content = views.xml.receta.render(succes_aux, mensaje_aux);
+            Content content = receta.render(succes_aux, mensaje_aux);
 
-            return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+            return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
         } else {
             return badRequest("Unsupported format");
@@ -142,7 +145,7 @@ public class AutoresController extends Controller {
                 info.put("info", "No existe ningun autor con ese nombre!");
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
                 if (nombre_nuevo != "") {
@@ -163,7 +166,7 @@ public class AutoresController extends Controller {
                 info.put("info", "Autor modificado con éxito!");
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
             }
         } else if (request.accepts("application/xml")) {
             String succes_aux = "";
@@ -171,8 +174,8 @@ public class AutoresController extends Controller {
             if (autor_aux == null) {
                 succes_aux = "false";
                 mensaje_aux = "No existe ningun autor con ese nombre!";
-                Content content = views.xml.receta.render(succes_aux, mensaje_aux);
-                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                Content content = receta.render(succes_aux, mensaje_aux);
+                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
                 if (nombre_nuevo != "") {
@@ -190,8 +193,8 @@ public class AutoresController extends Controller {
                 autor_aux.update();
                 succes_aux = "true";
                 mensaje_aux = "Autor modificado con éxito!";
-                Content content = views.xml.receta.render(succes_aux, mensaje_aux);
-                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                Content content = receta.render(succes_aux, mensaje_aux);
+                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
             }
         } else {
             return badRequest("Unsupported format");
@@ -212,7 +215,7 @@ public class AutoresController extends Controller {
                 info.put("info", "No existe ningun autor con ese nombre!");
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
                 autor_aux.delete();
@@ -220,7 +223,7 @@ public class AutoresController extends Controller {
                 info.put("info", "Autor eliminado con éxito!");
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             }
         } else if (request.accepts("application/xml")) {
@@ -229,15 +232,15 @@ public class AutoresController extends Controller {
             if (autor_aux == null) {
                 succes_aux = "false";
                 mensaje_aux = "No existe ningun autor con ese nombre!";
-                Content content = views.xml.receta.render(succes_aux, mensaje_aux);
-                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                Content content = receta.render(succes_aux, mensaje_aux);
+                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
                 autor_aux.delete();
                 succes_aux = "true";
                 mensaje_aux = "Autor eliminado con éxito!";
-                Content content = views.xml.receta.render(succes_aux, mensaje_aux);
-                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                Content content = receta.render(succes_aux, mensaje_aux);
+                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
             }
         } else {
             return badRequest("Unsupported format");
@@ -257,7 +260,7 @@ public class AutoresController extends Controller {
                 info.put("info", "No existe ningun autor con ese nombre!");
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
                 succes.put("success", true);
@@ -274,7 +277,7 @@ public class AutoresController extends Controller {
                 info.set("autor", Json.parse(autor.replace("/\\/g", "")));
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             }
         } else if (request.accepts("application/xml")) {
@@ -283,12 +286,63 @@ public class AutoresController extends Controller {
             if (autor_aux == null) {
                 succes_aux = "false";
                 mensaje_aux = "No existe ningun autor con ese nombre!";
-                Content content = views.xml.receta.render(succes_aux, mensaje_aux);
-                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                Content content = receta.render(succes_aux, mensaje_aux);
+                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
-                Content content = views.xml._autor.render(autor_aux,2);
-                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                Content content = _autor.render(autor_aux,2);
+                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
+            }
+        } else {
+            return badRequest("Unsupported format");
+        }
+    }
+
+    public Result devolverById(Integer id, Http.Request request) {
+        Autor autor_aux = new Autor();
+        autor_aux = autor_aux.findAutorById(id);
+
+        if (request.accepts("application/json")) {
+            ArrayNode respuesta = Json.newArray();
+            ObjectNode succes = Json.newObject();
+            ObjectNode info = Json.newObject();
+            if (autor_aux == null) {
+                succes.put("success", false);
+                info.put("info", "No existe ningun autor con ese identificador!");
+                respuesta.add(succes);
+                respuesta.add(info);
+                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
+
+            } else {
+                succes.put("success", true);
+                //Descarto este metodo porque no me gusta el resultado y prefiero crear mi json a mano para conseguir un mejor resultado
+                /*ObjectMapper mapper = new ObjectMapper();
+                try{
+                String dtoAsString = mapper.writeValueAsString(receta_aux);
+                info.set("receta", Json.toJson(dtoAsString));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }*/
+
+                String autor = autor_aux.toJson(2);
+                info.set("autor", Json.parse(autor.replace("/\\/g", "")));
+                respuesta.add(succes);
+                respuesta.add(info);
+                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
+
+            }
+        } else if (request.accepts("application/xml")) {
+            String succes_aux = "";
+            String mensaje_aux = "";
+            if (autor_aux == null) {
+                succes_aux = "false";
+                mensaje_aux = "No existe ningun autor con ese identificador!";
+                Content content = receta.render(succes_aux, mensaje_aux);
+                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
+
+            } else {
+                Content content = _autor.render(autor_aux,2);
+                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
             }
         } else {
             return badRequest("Unsupported format");
@@ -309,7 +363,7 @@ public class AutoresController extends Controller {
                 info.put("info", "No existe ningun autr!");
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.notFound(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
                 succes.put("success", true);
@@ -320,7 +374,7 @@ public class AutoresController extends Controller {
                 }
                 respuesta.add(succes);
                 respuesta.add(info);
-                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.ok(respuesta).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
             }
         } else if (request.accepts("application/xml")) {
             String succes_aux = "";
@@ -328,12 +382,12 @@ public class AutoresController extends Controller {
             if (autores.size()== 0) {
                 succes_aux = "false";
                 mensaje_aux = "No existe ningun autor!";
-                Content content = views.xml.receta.render(succes_aux, mensaje_aux);
-                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                Content content = receta.render(succes_aux, mensaje_aux);
+                return Results.notFound(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
 
             } else {
                 Content content = views.xml.autores.render(autores);
-                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeRecetas().toString());
+                return Results.ok(content).withHeader("X-User-Count", autor_aux.findNumeroDeAutores().toString());
             }
         } else {
             return badRequest("Unsupported format");

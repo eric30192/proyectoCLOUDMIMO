@@ -3,12 +3,12 @@
     <nombre>@receta.getNombre()</nombre>
     <descripcion>@receta.getDescripcion()</descripcion>
     @if(receta.getTipo() != null){
-    @_tipo(receta.getTipo())
+    @_tipo(receta.getTipo(),1)
     }
     @if(receta.getIngredientes().size() > 0){
     <ingredientes>
         @for(i <- receta.getIngredientes()){
-        @_ingrediente(i)
+        @_ingrediente(i,1)
         }
     </ingredientes>
     }

@@ -10,6 +10,7 @@ import play.libs.Json;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.util.List;
 
 @Entity
 public class Tipo extends Model {
@@ -19,7 +20,6 @@ public class Tipo extends Model {
     String nombre_tipo;
     String descripcion;
 
-    @JsonBackReference
     @OneToOne(mappedBy = "tipo")
     public Receta receta;
 
@@ -31,8 +31,19 @@ public class Tipo extends Model {
     public static Tipo findByName(String nombre_buscado){
         return find.query().where().eq("NOMBRE_TIPO",nombre_buscado).findOne();
     }
+    public static Integer findNumeroDeTipos(){
+        return find.query().findCount();
+    }
+    public static List<Tipo> findAll(){return find.query().findList(); }
     public long getId() {
         return id;
+    }
+    public Receta getReceta() {
+        return receta;
+    }
+
+    public void setReceta(Receta receta) {
+        this.receta = receta;
     }
 
     public void setId(long id) {

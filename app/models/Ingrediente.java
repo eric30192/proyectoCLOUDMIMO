@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,6 @@ public class Ingrediente extends Model {
 
     String nombre;
     String familia;
-    @JsonBackReference
     @ManyToMany(mappedBy = "ingredientes")
     public Set<Receta> recetas;
     @CreatedTimestamp
@@ -39,6 +39,10 @@ public class Ingrediente extends Model {
     public static Ingrediente findByName(String nombre_buscado){
         return find.query().where().eq("NOMBRE",nombre_buscado).findOne();
     }
+    public static Integer findNumeroDeIngredientes(){
+        return find.query().findCount();
+    }
+    public static List<Ingrediente> findAll(){return find.query().findList(); }
     public long getId() {
         return id;
     }

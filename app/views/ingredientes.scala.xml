@@ -1,0 +1,7 @@
+@(ingredientes:List[Ingrediente])
+        <?xml version="1.0" encoding="utf-8" ?>
+<ingredientes>
+    @for(i <- ingredientes){
+    @_ingrediente(i,1)
+    }
+</ingredientes>
