@@ -39,7 +39,6 @@ public class IngredientesController extends Controller {
         if (request.contentType().get().equals("application/json")) {
             form = formFactory.form(Ingrediente.class).bindFromRequest(request);
             if (form.hasErrors()) {
-                System.out.println(form.errorsAsJson());
                 return Results.notAcceptable(form.errorsAsJson());
             } else {
                 ingrediente_aux = form.get();
@@ -62,7 +61,12 @@ public class IngredientesController extends Controller {
             //jugamos con parametros directamente
             ingrediente_aux.setNombre(nombre.toString());
             ingrediente_aux.setFamilia(familia.toString());
-            form.fill(ingrediente_aux);
+            form = formFactory.form(Ingrediente.class).fill(ingrediente_aux);
+            if (form.hasErrors()) {
+                return Results.notAcceptable(form.errorsAsJson());
+            } else {
+                ingrediente_aux = form.get();
+            }
 
         }
 

@@ -43,7 +43,6 @@ public class AutoresController extends Controller {
         if (request.contentType().get().equals("application/json")) {
             form = formFactory.form(Autor.class).bindFromRequest(request);
             if (form.hasErrors()) {
-                System.out.println(form.errorsAsJson());
                 return Results.notAcceptable(form.errorsAsJson());
             } else {
                 autor_aux = form.get();
@@ -68,7 +67,12 @@ public class AutoresController extends Controller {
             autor_aux.setNombre(nombre.toString());
             autor_aux.setApellidos(apellidos.toString());
             autor_aux.setCiudad_natal(ciudad_natal.toString());
-            form.fill(autor_aux);
+            form = formFactory.form(Autor.class).fill(autor_aux);
+            if (form.hasErrors()) {
+                return Results.notAcceptable(form.errorsAsJson());
+            } else {
+                autor_aux = form.get();
+            }
 
         }
 

@@ -39,7 +39,6 @@ public class TiposController extends Controller {
         if (request.contentType().get().equals("application/json")) {
             form = formFactory.form(Tipo.class).bindFromRequest(request);
             if (form.hasErrors()) {
-                System.out.println(form.errorsAsJson());
                 return Results.notAcceptable(form.errorsAsJson());
             } else {
                 tipo_aux = form.get();
@@ -62,7 +61,12 @@ public class TiposController extends Controller {
             //jugamos con parametros directamente
             tipo_aux.setNombre_tipo(nombre.toString());
             tipo_aux.setDescripcion(descripcion.toString());
-            form.fill(tipo_aux);
+            form = formFactory.form(Tipo.class).fill(tipo_aux);
+            if (form.hasErrors()) {
+                return Results.notAcceptable(form.errorsAsJson());
+            } else {
+                tipo_aux = form.get();
+            }
 
         }
 

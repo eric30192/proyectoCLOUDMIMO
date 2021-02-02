@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.ebean.Finder;
 import io.ebean.Model;
+import play.data.validation.Constraints;
 import play.libs.Json;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -17,7 +19,11 @@ public class Tipo extends Model {
     @Id
     long id;
 
+    @Constraints.Required(message = "El nombre del tipo es obligatorio")
+    @Column(unique = true)
+    @Constraints.MinLength(message = "El nombre debe tener 2 carácteres o mas",value = 2)
     String nombre_tipo;
+    @Constraints.Required(message = "La descripcion del tipo es obligatoria")
     String descripcion;
 
     @OneToOne(mappedBy = "tipo")

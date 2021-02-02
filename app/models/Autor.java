@@ -7,12 +7,10 @@ import io.ebean.Finder;
 import io.ebean.Model;
 import io.ebean.annotation.CreatedTimestamp;
 import io.ebean.annotation.UpdatedTimestamp;
+import play.data.validation.Constraints;
 import play.libs.Json;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -20,8 +18,12 @@ import java.util.List;
 public class Autor extends Model {
     @Id
     long id;
+    @Constraints.Required(message = "El nombre del autor es obligatorio")
+    @Column(unique = true)
+    @Constraints.MinLength(message = "El nombre debe tener 2 carácteres o mas",value = 2)
     String nombre;
     String apellidos;
+    @Constraints.Required(message = "La ciudad natal del autor es obligatorio")
     String ciudad_natal;
 
 
