@@ -3,6 +3,7 @@ package models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import customValidators.AutorNombreValidator;
 import io.ebean.Finder;
 import io.ebean.Model;
 import io.ebean.annotation.CreatedTimestamp;
@@ -20,6 +21,7 @@ public class Autor extends Model {
     long id;
     @Constraints.Required(message = "El nombre del autor es obligatorio")
     @Column(unique = true)
+    @Constraints.ValidateWith(AutorNombreValidator.class)
     @Constraints.MinLength(message = "El nombre debe tener 2 carácteres o mas",value = 2)
     String nombre;
     String apellidos;
